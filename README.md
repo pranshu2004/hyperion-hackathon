@@ -88,35 +88,41 @@ The repo ships with a 20-node simulated fintech/e-commerce topology and four scr
 ```bash
 git clone <this-repo>
 cd hyperion
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-
-python -m uvicorn dashboard.app:app --reload
 ```
 
-Then hit any of the demo endpoints:
+Copy `.env.example` to `.env` and fill in your values (optional — the app runs the full deterministic RCA pipeline without any LLM configured):
 
-GET /demo/sc001 # deterministic evidence only
-GET /demo/sc001?use_llm=true # + LLM narrative and fix suggestion
+```bash
+cp .env.example .env
+```
+
+**Important:** the `.env` file must be sourced into the shell before starting the server — the app does not auto-load it:
+
+```bash
+source .env && python -m uvicorn dashboard.app:app --reload
+```
+
+Then open `http://localhost:8000` in a browser.
+
+> **Note:** the dashboard opens on the deterministic-only view by default. For the full experience — LLM-generated narrative, root-cause explanation, and fix suggestion — click **back to all incidents**, then open **"Fraud Service NullPointerException cascade – v2 pipeline"**. That's the scenario that exercises the complete pipeline end-to-end (causal ranking → code-diff attribution → LLM narrative).
+
+Or hit the demo endpoints directly:
+
+```
+GET /demo/sc001                # deterministic evidence only
+GET /demo/sc001?use_llm=true   # + LLM narrative and fix suggestion
 GET /demo/sc002?use_llm=true
 GET /demo/sc003?use_llm=true
 GET /demo/sc004?use_llm=true
-
-Or open the dashboard UI at `http://localhost:8000` to browse incidents, evidence, and the dependency graph visually.
+```
 
 ### LLM configuration
 
-Hyperion is built and tuned against **gpt-5-mini**. This is a hard requirement, not a preference, the LLM calls use `max_completion_tokens` (not `max_tokens`) and deliberately do not set `temperature`, because that's what the gpt-5 reasoning-model family requires. Using a different model family without adjusting the client call signature will either error or silently degrade output quality. **Swapping the model is possible but requires code changes** in the LLM client construction (`domain_rca/service.py`, `output/formatter.py`), not just an env var flip.
+Hyperion is built and tuned against **gpt-5-mini**. This is a hard requirement, not a preference — the LLM calls use `max_completion_tokens` (not `max_tokens`) and deliberately do not set `temperature`, because that's what the gpt-5 reasoning-model family requires. Swapping to a different model family requires code changes in the client construction, not just an env var change.
 
-Hyperion degrades gracefully with no LLM configured at all, deterministic evidence and scoring still run; only narrative generation and diff/SQL interpretation are skipped.
-
-```bash
-export HYPERION_LLM_BASE_URL=<your-openai-compatible-endpoint>
-export HYPERION_LLM_API_KEY=<your-key>
-export HYPERION_LLM_MODEL=gpt-5-mini
-```
-
----
+Hyperion degrades gracefully with no LLM configured — deterministic evidence and scoring still run; only narrative generation and diff/SQL interpretation are skipped, and the demo falls back to a local default (`qwen2.5-coder:7b`) if `.env` isn't sourced or is missing.
 
 ## Tech Stack
 
