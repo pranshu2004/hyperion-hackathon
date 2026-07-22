@@ -1,0 +1,59 @@
+[
+  {
+    "event_type": "deploy",
+    "event_id": "deploy-aaaa1111",
+    "service_id": "auth-service",
+    "timestamp": "2025-11-02T14:20:00.000Z",
+    "version": "5.0.0"
+  },
+  {
+    "event_type": "deploy",
+    "event_id": "deploy-bbbb2222",
+    "service_id": "",
+    "timestamp": "2025-11-02T14:21:00.000Z",
+    "version": "5.0.1"
+  },
+  {
+    "event_type": "deploy",
+    "event_id": "deploy-cccc3333",
+    "service_id": "billing-service",
+    "timestamp": "2025-11-02T14:22:00.000Z"
+  },
+  {
+    "event_type": "deploy",
+    "event_id": "deploy-dddd4444",
+    "service_id": "billing-service",
+    "timestamp": "02/11/2025 14:23:00",
+    "version": "3.1.0"
+  },
+  {
+    "event_type": "deploy",
+    "event_id": "deploy-eeee5555",
+    "service_id": "billing-service",
+    "timestamp": "2025-11-02T14:24:00.000Z",
+    "version": "3.1.1",
+    "deploy_scope": "billing-service"
+  },
+  {
+    "event_type": "infra_scaling",
+    "event_id": "scale-ffff6666",
+    "service_id": "checkout-service",
+    "timestamp": "2025-11-02T14:25:00.000Z",
+    "replicas_before": 4,
+    "replicas_after": 8
+  },
+  {
+    "event_type": "config_change",
+    "event_id": "cfg-1010aaaa",
+    "service_id": "payments-service",
+    "timestamp": "2025-11-02T14:26:00.000Z",
+    "change_type": "feature_toggle",
+    "new_value": "enabled"
+  },
+  {
+    "event_id": "missing-event-type-0001",
+    "service_id": "checkout-service",
+    "timestamp": "2025-11-02T14:27:00.000Z"
+  },
+  "not-a-dict-just-a-string"
+]

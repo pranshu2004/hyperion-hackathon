@@ -1,0 +1,36 @@
+[
+  {
+    "event_type": "deploy",
+    "event_id": "deploy-9f1a2b3c",
+    "service_id": "checkout-service",
+    "timestamp": "2025-11-02T14:25:00.000Z",
+    "version": "2.4.1",
+    "deploy_scope": ["checkout-service"],
+    "author": "alice@hyperion.dev",
+    "diff_summary": "Refactor payment retry logic; reduce connection pool timeout from 8000ms to 5000ms",
+    "tags": {"ci_run": "4471", "rollout": "canary-25pct"}
+  },
+  {
+    "event_type": "config_change",
+    "event_id": "cfg-7788aabb",
+    "service_id": "payments-service",
+    "timestamp": "2025-11-02T14:26:30.000Z",
+    "change_type": "env_var",
+    "key": "DB_POOL_MAX_CONNECTIONS",
+    "old_value": "60",
+    "new_value": "40",
+    "author": "alice@hyperion.dev",
+    "tags": {"reason": "cost-optimization"}
+  },
+  {
+    "event_type": "feature_flag",
+    "event_id": "ff-aa11bb22",
+    "service_id": "checkout-service",
+    "timestamp": "2025-11-02T14:27:00.000Z",
+    "flag_key": "new-payment-retry-path",
+    "old_value": false,
+    "new_value": true,
+    "author": "bob@hyperion.dev",
+    "tags": {"experiment": "exp-2218"}
+  }
+]
