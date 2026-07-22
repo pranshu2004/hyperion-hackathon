@@ -52,7 +52,7 @@ def format_narrative_v2(
             f"any information not present above."
         )
         response = llm_client.chat.completions.create(
-            model=os.environ.get("HYPERION_LLM_MODEL", "gpt-4o"),
+            model=os.environ.get("HYPERION_LLM_MODEL", "qwen2.5-coder:7b"),
             messages=[{"role": "user", "content": prompt}],
             max_completion_tokens=1000,
         )
@@ -99,7 +99,7 @@ def generate_fix(
             f"Do not invent information not present in the evidence above."
         )
         response = llm_client.chat.completions.create(
-            model=os.environ.get("HYPERION_LLM_MODEL", "gpt-4o"),
+            model=os.environ.get("HYPERION_LLM_MODEL", "qwen2.5-coder:7b"),
             messages=[{"role": "user", "content": prompt}],
             max_completion_tokens=1000,
         )
